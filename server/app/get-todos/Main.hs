@@ -1,3 +1,5 @@
 module Main where
+import           Domain.Todo
 
-main = print "works"
+
+main = print "test"

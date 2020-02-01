@@ -26,6 +26,8 @@ dependencies:
   - dotenv
   - filepath
   - directory
+  - casing
+  - time
 
 library:
   source-dirs: src
