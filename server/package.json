@@ -1,0 +1,17 @@
+{
+  "name": "server",
+  "version": "1.0.0",
+  "main": "",
+  "license": "MIT",
+  "devDependencies": {
+    "serverless": "^1.62.0",
+    "serverless-dynamodb-local": "^0.2.39",
+    "serverless-haskell": "^0.10.0",
+    "serverless-offline": "^5.12.1",
+    "serverless-pseudo-parameters": "^2.5.0"
+  },
+  "scripts": {
+    "deploy": "sls deploy",
+    "dev:get-todos": "IS_OFFLINE=True ghcid -c='stack repl --main-is todo-app:exe:get-todos-exe'  -T=main"
+  }
+}
