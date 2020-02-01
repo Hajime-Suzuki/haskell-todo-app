@@ -1,5 +1,10 @@
 module Main where
-import           Domain.Todo
+import           UseCases.GetTodoList.UseCase
+import           UseCases.GetTodoList.Ports
+import           Utils.Database
 
-
-main = print "test"
+main = do
+  env <- getDbEnv
+  let payload = GetTodoListUseCasePayload env
+  let todos   = getTodoListUseCase payload
+  print todos
