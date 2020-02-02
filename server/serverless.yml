@@ -15,6 +15,7 @@ provider:
         - "dynamodb:PutItem"
         - "dynamodb:UpdateItem"
         - "dynamodb:DeleteItem"
+        - "dynamodb:Scan"
       Resource: "arn:aws:dynamodb:#{AWS::Region}:#{AWS::AccountId}:*"
 
 functions: ${file(./resources/serverless.functions.yml)}
@@ -34,7 +35,7 @@ custom:
     seed:
       dev:
         sources:
-          - table: haskell-users
+          - table: haskell-todo-app
             sources: [".seeds/todos.json"]
 
 package:

@@ -11,6 +11,7 @@
     "serverless-pseudo-parameters": "^2.5.0"
   },
   "scripts": {
+    "db": "yarn sls dynamodb start",
     "deploy": "sls deploy",
     "dev:get-todos": "IS_OFFLINE=True ghcid -c='stack repl --main-is todo-app:exe:get-todos-exe'  -T=main"
   }

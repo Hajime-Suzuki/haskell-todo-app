@@ -10,7 +10,7 @@ import           Network.AWS.DynamoDB           ( dynamoDB )
 import           Control.Lens
 import           System.Environment             ( lookupEnv )
 import           Data.Maybe                     ( isJust )
-
+import           Data.Text
 getDbEnv :: IO Env
 getDbEnv = do
   isOffline <- lookupEnv "IS_OFFLINE"
@@ -19,3 +19,6 @@ getDbEnv = do
     (Just _) -> do
       let dynamo = setEndpoint False "localhost" 8000 dynamoDB
       newEnv Discover <&> configure dynamo <&> envRegion .~ Frankfurt
+
+dbName :: Text
+dbName = "haskell-todo-app"
