@@ -1,4 +1,6 @@
-module Repositories.Todos.GetTodos where
+{-# LANGUAGE OverloadedStrings #-}
+
+module Repositories.Todos.AddTodo where
 
 import           Data.Text                      ( Text )
 import           Network.AWS.DynamoDB
@@ -17,11 +19,9 @@ import           Utils.Database
 import           Text.Pretty.Simple
 
 
-getAllTodos :: Env -> IO [Todo]
-getAllTodos env = do
+addTodo :: Env -> Todo -> IO ()
+addTodo env todo = do
   res <- runResourceT . runAWS env . send $ req
-  return $ mapMaybe fromDbEntity $ res ^. srsItems
-  where req = scan dbName
-
-
+  pPrint $ res ^. pirsResponseStatus
+  where req = putItem dbName & piItem .~ toDbEntity todo
 

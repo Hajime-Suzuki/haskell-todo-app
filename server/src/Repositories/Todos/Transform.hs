@@ -18,3 +18,11 @@ fromDbEntity item = if null item
                  , _todoCreatedAt = fromJust $ item ^. ix "createdAt" . avS
                  , _todoDone = fromJust . fromJust $ item ^? ix "done" . avBOOL -- check why item ^. ix "done" . avBOOL does not work
                  }
+
+toDbEntity :: Todo -> HM.HashMap Text AttributeValue
+toDbEntity todo = HM.fromList
+  [ ("id"       , attributeValue & avS ?~ (todo ^. todoId))
+  , ("title"    , attributeValue & avS ?~ (todo ^. todoTitle))
+  , ("createdAt", attributeValue & avS ?~ (todo ^. todoCreatedAt))
+  , ("done"     , attributeValue & avBOOL ?~ (todo ^. todoDone))
+  ]
