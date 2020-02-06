@@ -27,7 +27,14 @@ data CreateTodoInput = CreateTodoInput {
   _todoInputId :: Text,
   _todoInputTitle :: Text,
   _todoInputCreatedAt :: Text
-}
+}deriving(Show, Generic)
+
+
+instance FromJSON CreateTodoInput where
+  parseJSON =
+    genericParseJSON defaultOptions { fieldLabelModifier = drop 10 . camel }
+
+makeLenses ''CreateTodoInput
 
 createTodo :: CreateTodoInput -> Todo
 createTodo input = Todo { _todoId        = _todoInputId input
