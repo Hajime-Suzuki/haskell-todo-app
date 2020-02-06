@@ -10,9 +10,9 @@ data GetTodoListUseCasePayload = GetTodoListUseCasePayload {
   _env :: Env
 }
 
-data GetTodoListUserCaseRes = GetTodoListUserCaseRes {
+data GetTodoListUseCaseRes = GetTodoListUseCaseRes {
   _todos :: [Todo]
 }deriving(Generic, Show)
 
-instance ToJSON GetTodoListUserCaseRes where
+instance ToJSON GetTodoListUseCaseRes where
   toJSON = genericToJSON defaultOptions { fieldLabelModifier = drop 1 }
