@@ -13,3 +13,11 @@ createTodo:
     - http:
         path: /todos
         method: post
+
+deleteTodo:
+  name: ${self:service.name}-delete-todo
+  handler: todo-app.delete-todo-exe
+  events:
+    - http:
+        path: /todo/{id}
+        method: delete

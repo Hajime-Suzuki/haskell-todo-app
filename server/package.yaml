@@ -52,3 +52,13 @@ executables:
       - -with-rtsopts=-N
     dependencies:
       - todo-app
+
+  delete-todo-exe:
+    main: Main.hs
+    source-dirs: app/delete-todo
+    ghc-options:
+      - -threaded
+      - -rtsopts
+      - -with-rtsopts=-N
+    dependencies:
+      - todo-app
