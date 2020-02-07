@@ -5,3 +5,11 @@ getTodos:
     - http:
         path: /todos
         method: get
+
+createTodo:
+  name: ${self:service.name}-create-todo
+  handler: todo-app.create-todo-exe
+  events:
+    - http:
+        path: /todos
+        method: post

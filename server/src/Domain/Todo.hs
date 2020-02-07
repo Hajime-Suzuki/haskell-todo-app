@@ -7,7 +7,7 @@ import           Control.Lens
 import           GHC.Generics
 import           Data.Aeson
 import           Text.Casing                    ( camel )
-
+import           Debug.Pretty.Simple
 type ID = Text
 
 data Todo = Todo {
@@ -32,7 +32,7 @@ data CreateTodoInput = CreateTodoInput {
 
 instance FromJSON CreateTodoInput where
   parseJSON =
-    genericParseJSON defaultOptions { fieldLabelModifier = drop 10 . camel }
+    genericParseJSON defaultOptions { fieldLabelModifier = camel . drop 10 }
 
 makeLenses ''CreateTodoInput
 

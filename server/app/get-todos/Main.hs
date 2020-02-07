@@ -9,9 +9,10 @@ import           AWSLambda.Events.APIGateway
 import           Data.Text                      ( Text )
 import           Data.Aeson.Embedded
 import           Data.Aeson                     ( encode )
-import           Fake.GatewayReq
 import           Text.Pretty.Simple             ( pPrint )
+import           Fake.GatewayReq
 
+-- main = handler fakeGatewayReq
 main = apiGatewayMain handler
 
 handler

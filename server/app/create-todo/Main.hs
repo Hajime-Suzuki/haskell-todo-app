@@ -14,8 +14,8 @@ import           Fake.GatewayReq
 import           Text.Pretty.Simple             ( pPrint )
 
 
-main = handler $ createFakeReq (CreateTodoInput "id" "title" "2020-01-01") []
--- main = apiGatewayMain handler
+-- main = handler $ createFakeReq (CreateTodoInput "id" "title" "2020-01-01") []
+main = apiGatewayMain handler
 
 handler
   :: APIGatewayProxyRequest (Embedded CreateTodoInput)

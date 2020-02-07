@@ -12,4 +12,3 @@ createTodoUseCase (CreateTodoUseCasePayload env createTodoInput) = do
   addTodo env todo
   return $ CreateTodoUseCaseRes todo
 
-

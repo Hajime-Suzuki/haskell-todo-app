@@ -13,6 +13,7 @@
   "scripts": {
     "db": "yarn sls dynamodb start",
     "deploy": "sls deploy",
+    "dev": "sls offline start",
     "dev:get-todos": "IS_OFFLINE=True ghcid -c='stack repl --main-is todo-app:exe:get-todos-exe'  -T=main",
     "dev:create-todo": "IS_OFFLINE=True ghcid -c='stack repl --main-is todo-app:exe:create-todo-exe'  -T=main"
   }
