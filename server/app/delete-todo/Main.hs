@@ -22,5 +22,13 @@ handler
 
 handler evt = do
   env <- getDbEnv
-  deleteTodoUseCase $ DeleteTodoUseCasePayload env "1"
-  return $ responseOK & responseBodyEmbedded ?~ "delete user"
+  let todoId = evt ^. agprqPathParameters . at "id"
+  case todoId of
+    Nothing ->
+      return
+        $  responseNotFound
+        &  responseBodyEmbedded
+        ?~ "todo id can not be empty"
+    (Just id) -> do
+      deleteTodoUseCase $ DeleteTodoUseCasePayload env id
+      return $ responseOK & responseBodyEmbedded ?~ "delete user"
