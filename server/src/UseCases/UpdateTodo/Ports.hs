@@ -14,6 +14,6 @@ data UpdateTodoUseCasePayload = UpdateTodoUseCasePayload {
 }
 
 data UpdateTodoInput = UpdateTodoInput {
-  _updateInputTitle :: Text,
-  _updateInputDone :: Bool
+  _updateInputTitle :: Maybe Text,
+  _updateInputDone :: Maybe Bool
 }
