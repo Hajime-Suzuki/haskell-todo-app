@@ -48,10 +48,11 @@ updateTodo env id input = do
 getUpdateUserExpression :: UpdateTodoInput -> Text
 getUpdateUserExpression input = pack $ "SET " ++ intercalate
   ", "
-  (filter (not . null) [fn, ln])
+  (filter (not . null) [title, done])
  where
-  fn = if isJust (_updateInputTitle input) then "title = :updatedTitle" else ""
-  ln = if isJust (_updateInputDone input) then "done = :updatedDone" else ""
+  title =
+    if isJust (_updateInputTitle input) then "title = :updatedTitle" else ""
+  done = if isJust (_updateInputDone input) then "done = :updatedDone" else ""
 
 
 getUpdateUserExpressionValues
