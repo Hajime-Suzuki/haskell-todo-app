@@ -22,9 +22,12 @@ type Id = Text
 
 deleteTodo :: Env -> Id -> IO ()
 deleteTodo env id = do
-  res <- runResourceT . runAWS env . send $ req
+  res <- runResourceT . runAWS env . send =<< req
   print $ "todo" ++ show id ++ "has been deleted"
  where
-  req = deleteItem dbName & diKey .~ HM.fromList
-    [("id", attributeValue & avS ?~ id)]
+  req = do
+    dbName <- getDbName
+    return $ deleteItem dbName & diKey .~ HM.fromList
+      [("id", attributeValue & avS ?~ id)]
+
 

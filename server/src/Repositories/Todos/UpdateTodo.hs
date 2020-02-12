@@ -27,11 +27,13 @@ import           UseCases.UpdateTodo.Ports
 type Id = Text
 updateTodo :: Env -> Id -> UpdateTodoInput -> IO ()
 updateTodo env id input = do
-  res <- runResourceT . runAWS env . send $ req
+  res <- runResourceT . runAWS env . send =<< req
   print res
  where
-  req =
-    updateItem dbName
+  req = do
+    dbName <- getDbName
+    return
+      $  updateItem dbName
       &  uiKey
       .~ key
       &  uiUpdateExpression

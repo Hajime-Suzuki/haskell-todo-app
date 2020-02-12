@@ -13,13 +13,23 @@ import           Data.Aeson                     ( encode )
 import           Fake.GatewayReq
 import           Text.Pretty.Simple             ( pPrint )
 
-main = handler fakeGatewayReq
+-- main = apiGatewayMain handler
+main =
+  handler $ createFakeReq (UpdateTodoInput (Just "updated") (Just True)) []
 
 handler
-  :: APIGatewayProxyRequest Text -> IO (APIGatewayProxyResponse (Embedded Text))
+  :: APIGatewayProxyRequest (Embedded UpdateTodoInput)
+  -> IO (APIGatewayProxyResponse (Embedded Text))
 
 handler evt = do
   env <- getDbEnv
-  let input = UpdateTodoInput "updated" True
-  updateTodoUseCase $ UpdateTodoUseCasePayload env "1" input
-  return $ responseOK & responseBodyEmbedded ?~ "update todo"
+  let body = evt ^. requestBodyEmbedded
+  case body of
+    Nothing ->
+      return
+        $  responseBadRequest
+        &  responseBodyEmbedded
+        ?~ "body can not be empty"
+    (Just b) -> do
+      updateTodoUseCase $ UpdateTodoUseCasePayload env "1" b
+      return $ responseOK & responseBodyEmbedded ?~ "update todo"

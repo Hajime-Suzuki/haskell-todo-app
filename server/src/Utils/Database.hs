@@ -9,7 +9,9 @@ import           Network.AWS
 import           Network.AWS.DynamoDB           ( dynamoDB )
 import           Control.Lens
 import           System.Environment             ( lookupEnv )
-import           Data.Maybe                     ( isJust )
+import           Data.Maybe                     ( isJust
+                                                , fromJust
+                                                )
 import           Data.Text
 import           Text.Pretty.Simple
 import           System.IO                      ( stdout )
@@ -17,10 +19,11 @@ import           System.IO                      ( stdout )
 getDbEnv :: IO Env
 getDbEnv = do
   isOffline <- lookupEnv "IS_OFFLINE"
+  logger    <- newLogger Debug stdout
   case isOffline of
-    Nothing  -> newEnv Discover <&> envRegion .~ Frankfurt
+    Nothing ->
+      newEnv Discover <&> envRegion .~ Frankfurt <&> envLogger .~ logger
     (Just _) -> do
-      logger <- newLogger Debug stdout
       let dynamo = setEndpoint False "localhost" 8000 dynamoDB
       newEnv Discover
         <&> configure dynamo
@@ -29,5 +32,6 @@ getDbEnv = do
         <&> envLogger
         .~  logger
 
-dbName :: Text
-dbName = "haskell-todo-app"
+getDbName :: IO Text
+getDbName = pack . fromJust <$> lookupEnv "dbName"
+

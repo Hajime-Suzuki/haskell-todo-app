@@ -19,9 +19,12 @@ import           Text.Pretty.Simple
 
 getAllTodos :: Env -> IO [Todo]
 getAllTodos env = do
-  res <- runResourceT . runAWS env . send $ req
+  res <- runResourceT . runAWS env . send =<< req
   return $ mapMaybe fromDbEntity $ res ^. srsItems
-  where req = scan dbName
+ where
+  req = do
+    dbName <- getDbName
+    return $ scan dbName
 
 
 

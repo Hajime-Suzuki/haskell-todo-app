@@ -21,7 +21,10 @@ import           Text.Pretty.Simple
 
 addTodo :: Env -> Todo -> IO ()
 addTodo env todo = do
-  res <- runResourceT . runAWS env . send $ req
+  res <- runResourceT . runAWS env . send =<< req
   pPrint $ res ^. pirsResponseStatus
-  where req = putItem dbName & piItem .~ toDbEntity todo
+ where
+  req = do
+    dbName <- getDbName
+    return $ putItem dbName & piItem .~ toDbEntity todo
 

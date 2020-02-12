@@ -2,7 +2,7 @@ Resources:
   mainTable:
     Type: AWS::DynamoDB::Table
     Properties:
-      TableName: haskell-todo-app
+      TableName: ${self:provider.environment.dbName}
       AttributeDefinitions:
         - AttributeName: id
           AttributeType: S

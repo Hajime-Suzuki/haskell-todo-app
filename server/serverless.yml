@@ -7,6 +7,8 @@ provider:
   runtime: haskell
   region: eu-central-1
   stage: dev
+  environment:
+    dbName: haskell-todo-app-db
   iamRoleStatements:
     - Effect: Allow
       Action:

@@ -14,8 +14,8 @@ import           Text.Pretty.Simple             ( pPrint )
 import           UseCases.DeleteTodo.UseCase
 import           UseCases.DeleteTodo.Ports
 
-main = handler $ fakeGatewayReq
--- main = apiGatewayMain handler
+-- main = handler $ fakeGatewayReq
+main = apiGatewayMain handler
 
 handler
   :: APIGatewayProxyRequest Text -> IO (APIGatewayProxyResponse (Embedded Text))
