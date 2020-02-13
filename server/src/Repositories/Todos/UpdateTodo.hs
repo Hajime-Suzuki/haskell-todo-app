@@ -10,8 +10,7 @@ import           Control.Lens
 import           Control.Monad.Trans.AWS
 import           Network.AWS                    ( runAWS )
 import qualified Data.HashMap.Strict           as HM
-import           Data.Maybe                     ( fromJust
-                                                , catMaybes
+import           Data.Maybe                     ( catMaybes
                                                 , mapMaybe
                                                 , isJust
                                                 )
@@ -40,6 +39,7 @@ updateTodo env id input = do
       ?~ expr
       &  uiExpressionAttributeValues
       .~ values
+
   key    = HM.fromList [("id", attributeValue & avS ?~ id)]
   expr   = getUpdateUserExpression input
   values = getUpdateUserExpressionValues input

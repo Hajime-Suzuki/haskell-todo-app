@@ -8,6 +8,7 @@ import           Network.AWS.Env
 import           Network.AWS
 import           Network.AWS.DynamoDB           ( dynamoDB )
 import           Control.Lens
+import           Control.Applicative            ( (<|>) )
 import           System.Environment             ( lookupEnv )
 import           Data.Maybe                     ( isJust
                                                 , fromJust
@@ -33,5 +34,10 @@ getDbEnv = do
         .~  logger
 
 getDbName :: IO Text
-getDbName = pack . fromJust <$> lookupEnv "dbName"
+getDbName = do
+  dbName <- lookupEnv "dbName"
+  case dbName of
+    (Just x) -> return $ pack x
+    Nothing  -> return "haskell-todo-app-db"
+
 

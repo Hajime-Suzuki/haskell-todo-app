@@ -21,3 +21,11 @@ deleteTodo:
     - http:
         path: /todo/{id}
         method: delete
+
+updateTodo:
+  name: ${self:service.name}-update-todo
+  handler: todo-app.update-todo-exe
+  events:
+    - http:
+        path: /todo/{id}
+        method: put

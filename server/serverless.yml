@@ -37,7 +37,7 @@ custom:
     seed:
       dev:
         sources:
-          - table: haskell-todo-app
+          - table: ${self:provider.environment.dbName}
             sources: [".seeds/todos.json"]
 
 package:
