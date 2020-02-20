@@ -1,0 +1,35 @@
+{
+  "extends": [
+    "eslint:recommended",
+    "plugin:@typescript-eslint/recommended",
+    "plugin:@typescript-eslint/eslint-recommended"
+  ],
+  "plugins": ["react", "@typescript-eslint"],
+  "parser": "@typescript-eslint/parser",
+  "env": { "browser": true, "es6": true },
+  "parserOptions": {
+    "ecmaFeatures": {
+      "jsx": true
+    },
+    "ecmaVersion": 2018,
+    "sourceType": "module"
+  },
+  "rules": {
+    "@typescript-eslint/no-unused-vars": [
+      "warn",
+      { "argsIgnorePattern": "^_" }
+    ],
+    "react/self-closing-comp": "error",
+    "react/jsx-uses-vars": "error",
+    "react/jsx-uses-react": "error",
+    "@typescript-eslint/no-explicit-any": "off",
+    "@typescript-eslint/member-delimiter-style": "off",
+    "@typescript-eslint/interface-name-prefix": "off",
+    "@typescript-eslint/explicit-function-return-type": "off",
+    "@typescript-eslint/no-use-before-define": "off",
+    "@typescript-eslint/camelcase": "off",
+    "@typescript-eslint/no-var-requires": "error",
+    "@typescript-eslint/quotes": "error",
+    "object-shorthand": ["error", "always"]
+  }
+}
