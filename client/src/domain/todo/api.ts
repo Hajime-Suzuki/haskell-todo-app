@@ -1,4 +1,5 @@
 import axios, { AxiosInstance } from 'axios'
+import { Todo } from './todo'
 
 const baseUrl = (process.env.NODE_ENV === 'production' && process.env.REACT_APP_API) || 'http://localhost:4000'
 
@@ -13,8 +14,7 @@ class TodoApi {
   }
 
   getTodos = async () => {
-    const { data } = await this.api.get('/todos')
-    console.log(data)
+    const { data } = await this.api.get<{ todos: Todo[] }>('/todos')
     return data
   }
 
