@@ -4,7 +4,7 @@ import { Todo } from './todo'
 const baseUrl = (process.env.NODE_ENV === 'production' && process.env.REACT_APP_API) || 'http://localhost:4000'
 
 type SaveTodoArgs = {
-  title: string
+  todo: Todo
 }
 
 class TodoApi {
@@ -19,7 +19,7 @@ class TodoApi {
   }
 
   saveTodo = async (data: SaveTodoArgs) => {
-    console.log(data)
+    await this.api.post('/todos', data.todo)
   }
 }
 

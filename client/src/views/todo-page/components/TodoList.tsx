@@ -16,7 +16,7 @@ const columns: ColumnProps<Todo>[] = [
   {
     title: 'Done',
     dataIndex: 'done',
-    render: (val, r, i) => {
+    render: val => {
       return val === true ? 'true' : 'false'
     },
   },

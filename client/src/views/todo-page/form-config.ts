@@ -1,12 +1,19 @@
 import { FormikConfig } from 'formik'
-import { todoApi } from '../../domain/todo/api'
-import { string, object } from 'yup'
+import { object, string } from 'yup'
+import { createTodo, Todo } from '../../domain/todo/todo'
 
-export const formConfig: FormikConfig<{ title: string }> = {
+export type AddTodoFormValues = { title: string }
+
+export const formConfig = (config: {
+  onSubmit: (payload: { todo: Todo }) => Promise<void>
+  onComplete?: (todo: Todo) => void
+}): FormikConfig<AddTodoFormValues> => ({
   initialValues: { title: '' },
   onSubmit: async (values, { resetForm }) => {
-    await todoApi.saveTodo(values)
+    const todo = createTodo(values)
+    config.onSubmit({ todo })
     resetForm()
+    config.onComplete?.(todo)
   },
   validateOnChange: false,
   validateOnBlur: true,
@@ -16,5 +23,4 @@ export const formConfig: FormikConfig<{ title: string }> = {
       .min(2, 'name must be equal to or longer than 2 characters')
       .max(20, 'name must be shorter than 20 characters'),
   }),
-}
-
+})

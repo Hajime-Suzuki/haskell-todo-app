@@ -4,6 +4,7 @@ import { Layout, Row, Col, Typography } from 'antd'
 import { formConfig } from './form-config'
 import { TodoList } from './components/TodoList'
 import { todoApi } from '../../domain/todo/api'
+import { Todo } from '../../domain/todo/todo'
 
 const { Title } = Typography
 const { Content } = Layout
@@ -15,24 +16,28 @@ const useTodoPageData = () => {
     const { todos } = await todoApi.getTodos()
     setTodos(todos)
   }
+
+  const addTodo = async (todo: Todo) => {
+    setTodos([...todos, todo])
+  }
+
   useEffect(() => {
     getTodos()
   }, [])
 
-  return { todos }
+  return { todos, addTodo }
 }
 
 export const TodoPage = () => {
-  const { todos } = useTodoPageData()
+  const { todos, addTodo } = useTodoPageData()
 
   return (
-    // <Layout>
     <Content style={{ minHeight: '100vh', padding: 50, textAlign: 'center' }}>
       <Row type="flex" justify="center" gutter={[16, 0]}>
         <Col xs={24}>
           <div style={{ maxWidth: 500, margin: 'auto' }}>
             <Title level={2}>Todo list</Title>
-            <TodoInput config={formConfig}></TodoInput>
+            <TodoInput config={formConfig({ onComplete: addTodo, onSubmit: todoApi.saveTodo })}></TodoInput>
           </div>
         </Col>
         <Col xs={24}>
@@ -40,6 +45,5 @@ export const TodoPage = () => {
         </Col>
       </Row>
     </Content>
-    // </Layout>
   )
 }
