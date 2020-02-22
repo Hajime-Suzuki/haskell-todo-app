@@ -1,29 +1,38 @@
-import { Button, Col, Input, Row } from 'antd'
-import { Formik } from 'formik'
-import React from 'react'
-import { todoApi } from '../../../domain/todo/api'
+import { Button, Col, Form, Input, Row } from 'antd'
+import { Form as FormikForm, Formik, FormikConfig } from 'formik'
+import React, { FC } from 'react'
+import { getError } from '../../../utils/forms/get-error'
 
-export const TodoInput = () => {
+const FormItem = Form.Item
+
+type FormValues = {
+  title: string
+}
+type Props = {
+  config: FormikConfig<FormValues>
+}
+
+export const TodoInput: FC<Props> = ({ config }) => {
   return (
-    <>
-      <Formik initialValues={{ title: '' }} onSubmit={todoApi.saveTodo}>
-        {f => {
-          return (
-            <>
-              <Row gutter={[0, 16]}>
-                <Col>
+    <Formik {...config}>
+      {f => {
+        return (
+          <FormikForm>
+            <Row gutter={[0, 8]}>
+              <Col>
+                <FormItem {...getError('title', f.errors)}>
                   <Input value={f.values.title} name="title" onChange={f.handleChange}></Input>
-                </Col>
-                <Col>
-                  <Button type="primary" onClick={f.handleSubmit as any}>
-                    submit
-                  </Button>
-                </Col>
-              </Row>
-            </>
-          )
-        }}
-      </Formik>
-    </>
+                </FormItem>
+              </Col>
+              <Col>
+                <Button htmlType="submit" type="primary">
+                  add
+                </Button>
+              </Col>
+            </Row>
+          </FormikForm>
+        )
+      }}
+    </Formik>
   )
 }

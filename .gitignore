@@ -130,3 +130,4 @@ cabal.project.local~
 .HTF/
 .ghc.environment.*
 *.http
+*-exe
