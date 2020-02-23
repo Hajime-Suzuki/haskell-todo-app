@@ -37,11 +37,11 @@ export const TodoPage = () => {
         <Col xs={24}>
           <div style={{ maxWidth: 500, margin: 'auto' }}>
             <Title level={2}>Todo list</Title>
-            <TodoInput config={formConfig({ onComplete: addTodo, onSubmit: todoApi.saveTodo })}></TodoInput>
+            <TodoInput config={formConfig({ onComplete: addTodo, onSubmit: todoApi.saveTodo })} />
           </div>
         </Col>
         <Col xs={24}>
-          <TodoList todos={todos}></TodoList>
+          <TodoList todos={todos} />
         </Col>
       </Row>
     </Content>

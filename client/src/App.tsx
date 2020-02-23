@@ -2,7 +2,7 @@ import React from 'react'
 import { TodoPage } from './views/todo-page/TodoPage'
 
 function App() {
-  return <TodoPage></TodoPage>
+  return <TodoPage />
 }
 
 export default App
