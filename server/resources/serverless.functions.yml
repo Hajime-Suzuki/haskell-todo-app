@@ -19,7 +19,7 @@ deleteTodo:
   handler: todo-app.delete-todo-exe
   events:
     - http:
-        path: /todo/{id}
+        path: /todos/{id}
         method: delete
 
 updateTodo:
@@ -27,5 +27,5 @@ updateTodo:
   handler: todo-app.update-todo-exe
   events:
     - http:
-        path: /todo/{id}
+        path: /todos/{id}
         method: put

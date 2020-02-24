@@ -1,31 +1,53 @@
-import { Table } from 'antd'
+import { Table, Button } from 'antd'
 import { ColumnProps } from 'antd/lib/table'
 import { Variants } from 'framer-motion'
-import React, { FC } from 'react'
+import React, { FC, useState } from 'react'
 import { Todo } from '../../../domain/todo/todo'
 import { withMotionDiv } from '../../../utils/animation/with-motion-div'
 import { Maybe } from '../../../utils/types/types'
 
 type Props = {
   todos: Maybe<Todo[]>
+  deleteTodo: (todoIndex: number) => Promise<void>
 }
 
-const columns: ColumnProps<Todo>[] = [
-  {
-    title: 'Name',
-    dataIndex: 'title',
-  },
-  {
-    title: 'Done',
-    dataIndex: 'done',
-    render: val => {
-      return val === true ? 'true' : 'false'
-    },
-  },
-]
+const TodoTable: FC<Props> = ({ todos, deleteTodo }) => {
+  const [selectedRowKeys, setSelectedRowKeys] = useState<string[] | number[]>([])
 
-const TodoTable: FC<Props> = ({ todos }) => {
-  return <Table dataSource={todos || undefined} columns={columns} pagination={false} rowKey={({ id }) => id} />
+  const onSelectRowKeys = (selectedRowKeys: string[] | number[], _selectedRows: Todo[]) => {
+    setSelectedRowKeys(selectedRowKeys)
+  }
+
+  const columns: ColumnProps<Todo>[] = [
+    {
+      title: 'Name',
+      dataIndex: 'title',
+    },
+    {
+      title: 'Done',
+      dataIndex: 'done',
+      render: val => {
+        return val === true ? 'true' : 'false'
+      },
+    },
+    {
+      title: '',
+      dataIndex: 'id',
+      render: (_, __, index) => {
+        return <Button onClick={() => deleteTodo(index)}>Delete</Button>
+      },
+    },
+  ]
+
+  return (
+    <Table
+      dataSource={todos || undefined}
+      columns={columns}
+      pagination={false}
+      rowKey={({ id }) => id}
+      rowSelection={{ selectedRowKeys, onChange: onSelectRowKeys }}
+    />
+  )
 }
 
 const animationVariants: Variants = {

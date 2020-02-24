@@ -21,6 +21,10 @@ class TodoApi {
   saveTodo = async (data: SaveTodoArgs) => {
     await this.api.post('/todos', data.todo)
   }
+
+  deleteTodo = async (id: string)=> {
+    await this.api.delete(`/todos/${id}`)
+  }
 }
 
 export const todoApi = new TodoApi(baseUrl)
