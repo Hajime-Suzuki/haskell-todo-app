@@ -14,10 +14,10 @@ import           Data.Maybe                     ( fromJust )
 import           Fake.GatewayReq
 import           Text.Pretty.Simple             ( pPrint )
 
--- main = apiGatewayMain handler
-main = handler $ createFakeReq
-  (UpdateTodoInput (Just "test update") (Just True))
-  [("id", "1")]
+main = apiGatewayMain handler
+-- main = handler $ createFakeReq
+--   (UpdateTodoInput (Just "test update") (Just True))
+--   [("id", "1")]
 
 handler
   :: APIGatewayProxyRequest (Embedded UpdateTodoInput)
