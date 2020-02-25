@@ -25,6 +25,10 @@ class TodoApi {
   deleteTodo = async (id: string)=> {
     await this.api.delete(`/todos/${id}`)
   }
+
+  toggleDone = async (id: string, done: boolean) =>{
+    await this.api.put(`/todos/${id}`, {done})
+  }
 }
 
 export const todoApi = new TodoApi(baseUrl)

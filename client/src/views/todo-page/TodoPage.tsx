@@ -29,15 +29,24 @@ const useTodoPageData = () => {
     setTodos(todos?.filter(todo => todo.id !== id) || null)
   }
 
+  const toggleDone = async (todo: Todo, done: boolean) => {
+    const targetIndex = todos?.findIndex(v => v.id === todo.id) ?? -1
+    const updated = [...(todos || [])]
+    updated[targetIndex].done = done
+
+    await todoApi.toggleDone(updated[targetIndex].id, done)
+    setTodos(updated)
+  }
+
   useEffect(() => {
     getTodos()
   }, [])
 
-  return { todos, addTodo, deleteTodo }
+  return { todos, addTodo, deleteTodo, toggleDone }
 }
 
 export const TodoPage = () => {
-  const { todos, addTodo, deleteTodo } = useTodoPageData()
+  const { todos, addTodo, deleteTodo, toggleDone } = useTodoPageData()
   if (!todos) return <Spin size="large" />
 
   return (
@@ -50,7 +59,7 @@ export const TodoPage = () => {
           </div>
         </Col>
         <Col xs={24}>
-          <TodoList todos={todos} deleteTodo={deleteTodo} />
+          <TodoList todos={todos} deleteTodo={deleteTodo} toggleDone={toggleDone} />
         </Col>
       </Row>
     </Content>
