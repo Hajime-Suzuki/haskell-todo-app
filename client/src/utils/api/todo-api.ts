@@ -1,5 +1,5 @@
 import axios, { AxiosInstance } from 'axios'
-import { Todo } from './todo'
+import { Todo } from '../../domain/todo/todo'
 
 const baseUrl = (process.env.NODE_ENV === 'production' && process.env.REACT_APP_API) || 'http://localhost:4000'
 

@@ -11,9 +11,10 @@ type Props = {
   todos: Maybe<Todo[]>
   deleteTodo: (todoIndex: number) => Promise<void>
   toggleDone: (todo: Todo, selected: boolean) => Promise<void>
+  toggleDoneAll: (selected: boolean) => Promise<void>
 }
 
-const TodoTable: FC<Props> = ({ todos, deleteTodo, toggleDone }) => {
+const TodoTable: FC<Props> = ({ todos, deleteTodo, toggleDone, toggleDoneAll }) => {
   const onSelect = (record: Todo, selected: boolean, _selectedRows: Object[], _e: Event) => {
     toggleDone(record, selected)
   }
@@ -41,7 +42,11 @@ const TodoTable: FC<Props> = ({ todos, deleteTodo, toggleDone }) => {
       rowClassName={record => (record.done ? 'isDone' : '')}
       pagination={false}
       rowKey={({ id }) => id}
-      rowSelection={{ onSelect, selectedRowKeys }}
+      rowSelection={{
+        onSelect,
+        selectedRowKeys,
+        onSelectAll: toggleDoneAll,
+      }}
     />
   )
 }

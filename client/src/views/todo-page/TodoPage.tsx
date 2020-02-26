@@ -3,7 +3,7 @@ import { TodoInput } from './components/TodoInput'
 import { Layout, Row, Col, Typography, Spin } from 'antd'
 import { formConfig } from './form-config'
 import { TodoList } from './components/TodoList'
-import { todoApi } from '../../domain/todo/api'
+import { todoApi } from '../../utils/api/todo-api'
 import { Todo } from '../../domain/todo/todo'
 
 const { Title } = Typography
@@ -38,15 +38,22 @@ const useTodoPageData = () => {
     setTodos(updated)
   }
 
+  const toggleDoneAll = async (done: boolean) => {
+    if (!todos) return
+    const target = todos.filter(t => t.done !== done)
+    await Promise.all(target.map(t => todoApi.toggleDone(t.id, done)))
+    setTodos(todos.map(t => ({ ...t, done })))
+  }
+
   useEffect(() => {
     getTodos()
   }, [])
 
-  return { todos, addTodo, deleteTodo, toggleDone }
+  return { todos, addTodo, deleteTodo, toggleDone, toggleDoneAll }
 }
 
 export const TodoPage = () => {
-  const { todos, addTodo, deleteTodo, toggleDone } = useTodoPageData()
+  const { todos, addTodo, deleteTodo, toggleDone, toggleDoneAll } = useTodoPageData()
   if (!todos) return <Spin size="large" />
 
   return (
@@ -59,7 +66,7 @@ export const TodoPage = () => {
           </div>
         </Col>
         <Col xs={24}>
-          <TodoList todos={todos} deleteTodo={deleteTodo} toggleDone={toggleDone} />
+          <TodoList todos={todos} deleteTodo={deleteTodo} toggleDone={toggleDone} toggleDoneAll={toggleDoneAll} />
         </Col>
       </Row>
     </Content>
