@@ -12,9 +12,10 @@ type Props = {
   deleteTodo: (todoIndex: number) => Promise<void>
   toggleDone: (todo: Todo, selected: boolean) => Promise<void>
   toggleDoneAll: (selected: boolean) => Promise<void>
+  deleteCompleted: () => Promise<void>
 }
 
-const TodoTable: FC<Props> = ({ todos, deleteTodo, toggleDone, toggleDoneAll }) => {
+const TodoTable: FC<Props> = ({ todos, deleteTodo, toggleDone, toggleDoneAll, deleteCompleted }) => {
   const onSelect = (record: Todo, selected: boolean, _selectedRows: Object[], _e: Event) => {
     toggleDone(record, selected)
   }
@@ -36,18 +37,25 @@ const TodoTable: FC<Props> = ({ todos, deleteTodo, toggleDone, toggleDoneAll }) 
   ]
 
   return (
-    <Table
-      dataSource={todos || undefined}
-      columns={columns}
-      rowClassName={record => (record.done ? 'isDone' : '')}
-      pagination={false}
-      rowKey={({ id }) => id}
-      rowSelection={{
-        onSelect,
-        selectedRowKeys,
-        onSelectAll: toggleDoneAll,
-      }}
-    />
+    <>
+      <div style={{ textAlign: 'left', marginBottom: '1em' }}>
+        <Button type="danger" onClick={deleteCompleted}>
+          Delete completed
+        </Button>
+      </div>
+      <Table
+        dataSource={todos || undefined}
+        columns={columns}
+        rowClassName={record => (record.done ? 'isDone' : '')}
+        pagination={false}
+        rowKey={({ id }) => id}
+        rowSelection={{
+          onSelect,
+          selectedRowKeys,
+          onSelectAll: toggleDoneAll,
+        }}
+      />
+    </>
   )
 }
 

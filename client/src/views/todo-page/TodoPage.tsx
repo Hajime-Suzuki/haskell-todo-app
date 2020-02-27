@@ -45,20 +45,27 @@ const useTodoPageData = () => {
     setTodos(todos.map(t => ({ ...t, done })))
   }
 
+  const deleteCompleted = async () => {
+    if (!todos) return
+    const completedTodoIds = todos?.filter(({ done }) => done)
+    await Promise.all(completedTodoIds.map(({ id }) => todoApi.deleteTodo(id)))
+    setTodos(todos.filter(({ done }) => !done))
+  }
+
   useEffect(() => {
     getTodos()
   }, [])
 
-  return { todos, addTodo, deleteTodo, toggleDone, toggleDoneAll }
+  return { todos, addTodo, deleteTodo, toggleDone, toggleDoneAll, deleteCompleted }
 }
 
 export const TodoPage = () => {
-  const { todos, addTodo, deleteTodo, toggleDone, toggleDoneAll } = useTodoPageData()
+  const { todos, addTodo, deleteTodo, toggleDone, toggleDoneAll, deleteCompleted } = useTodoPageData()
   if (!todos) return <Spin size="large" />
 
   return (
     <Content style={{ minHeight: '100vh', padding: 50, textAlign: 'center' }}>
-      <Row type="flex" justify="center" gutter={[16, 0]}>
+      <Row type="flex" justify="center" gutter={[16, 24]}>
         <Col xs={24}>
           <div style={{ maxWidth: 500, margin: 'auto' }}>
             <Title level={2}>Todo list</Title>
@@ -66,7 +73,13 @@ export const TodoPage = () => {
           </div>
         </Col>
         <Col xs={24}>
-          <TodoList todos={todos} deleteTodo={deleteTodo} toggleDone={toggleDone} toggleDoneAll={toggleDoneAll} />
+          <TodoList
+            todos={todos}
+            deleteTodo={deleteTodo}
+            toggleDone={toggleDone}
+            toggleDoneAll={toggleDoneAll}
+            deleteCompleted={deleteCompleted}
+          />
         </Col>
       </Row>
     </Content>

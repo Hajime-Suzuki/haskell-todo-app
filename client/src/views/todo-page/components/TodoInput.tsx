@@ -16,10 +16,10 @@ export const TodoInput: FC<Props> = ({ config }) => {
       {f => {
         return (
           <FormikForm>
-            <Row gutter={[0, 8]}>
+            <Row gutter={[0, 0]}>
               <Col>
                 <FormItem {...getError('title', f.errors)}>
-                  <Input value={f.values.title} name="title" onChange={f.handleChange} />
+                  <Input placeholder="title" value={f.values.title} name="title" onChange={f.handleChange} />
                 </FormItem>
               </Col>
               <Col>
